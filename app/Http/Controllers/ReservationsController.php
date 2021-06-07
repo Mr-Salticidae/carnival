@@ -14,7 +14,6 @@ class ReservationsController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -24,7 +23,7 @@ class ReservationsController extends Controller
      */
     public function create()
     {
-        //
+        return view('reservations.create');
     }
 
     /**
@@ -35,7 +34,14 @@ class ReservationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $reservation = new Reservation;
+        $reservation->user_id = $request->user()->id;
+        $reservation->reservation_date = $request->input('date');
+        $id_combination = $reservation->user_id . $reservation->reservation_date;
+        $reservation->reservation_code = substr(md5($id_combination), 0, 6);
+        $reservation->save();
+
+        return redirect('/dashboard');
     }
 
     /**

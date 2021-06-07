@@ -12,4 +12,6 @@ class Reservation extends Model
     protected $fillable = [
         'user_id', 'reservation_date', 'reservation_code'
     ];
+
+    public $timestamps = false;
 }
