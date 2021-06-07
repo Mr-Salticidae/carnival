@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $reservations = DB::select('select * from reservations where user_id = ?', [Auth::id()]);
+    $reservations = DB::select('select * from reservations where user_id = ? order by reservation_date', [Auth::id()]);
     $reservations = array($reservations)[0];
     return view('dashboard', ['reservations' => $reservations]);
 })->middleware(['auth'])->name('dashboard');
@@ -32,4 +32,4 @@ Route::get('/dashboard', function () {
 
 Route::resource('reservations', ReservationsController::class);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -25,11 +25,25 @@
                         @if (empty($reservations))
                             No Reservation Yet
                         @else
-                            <ul>
-                                @foreach($reservations as $reservation)
-                                    <li>Reservation Date: Day {{ $reservation->reservation_date }}  Reservation Code: {{ $reservation->reservation_code }}</li>
-                                @endforeach
-                            </ul>
+                            <form action="/reservations/delete" method="post">
+                                @csrf
+                                @method('delete')
+                                <table>
+                                    <tr>
+                                        <th>Reservation Date</th>
+                                        <th>Reservation Code</th>
+                                        <th></th>
+                                    </tr>
+                                    @foreach ($reservations as $reservation)
+                                        <tr>
+                                            <td>Day {{ $reservation->reservation_date }}</td>
+                                            <td>{{ $reservation->reservation_code }}</td>
+                                            <td><button type="submit" value={{ $reservation->id }}
+                                                    name="reservation_id">Cancel</button></td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            </form>
                         @endif
                     </div>
                 </div>
