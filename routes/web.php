@@ -19,11 +19,15 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $reservations = DB::select('select * from reservations where user_id = ?', [Auth::id()]);
+    $reservations = array($reservations)[0];
+    return view('dashboard', ['reservations' => $reservations]);
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/reservations/create', [ReservationsController::class, 'index']);
+//Route::get('/reservations/create', [ReservationsController::class, 'index']);
+//
+//Route::post('/reservations/create', [ReservationsController::class, 'create']);
 
-Route::post('/reservations/create', [ReservationsController::class, 'create']);
+Route::resource('reservations', ReservationsController::class);
 
 require __DIR__.'/auth.php';
