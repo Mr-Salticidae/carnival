@@ -24,7 +24,7 @@ class ReservationsController extends Controller
      */
     public function create()
     {
-        return view('reservations.create')->with('');
+        return view('reservations.create');
     }
 
     /**
@@ -35,7 +35,6 @@ class ReservationsController extends Controller
      */
     public function store(Request $request)
     {
-        $error_message = null;
         $reservation_exists = Reservation::where([
             ['user_id', '=', $request->user()->id],
             ['reservation_date', '=', $request->input('date')]
@@ -44,11 +43,11 @@ class ReservationsController extends Controller
         $reservation_per_user_count = Reservation::where('user_id', $request->user()->id)->count();
         $reservation_per_day_count = Reservation::where('reservation_date', $request->input('date'))->count();
         if ($reservation_exists) {
-            //
+            $error_message = 'You have already reserved this day.';
         } elseif ($reservation_per_user_count >= 3) {
-            //
+            $error_message = 'The number of reservations of you has reached the limit (3).';
         } elseif ($reservation_per_day_count >= 10) {
-            //
+            $error_message = 'The number of reservations on this day has reached the limit (10).';
         } else {
             $code_seed = $request->user()->id . $request->input('date') . date('Y-m-d H:i:s');
             Reservation::create([
@@ -56,8 +55,13 @@ class ReservationsController extends Controller
                 'reservation_date' => $request->input('date'),
                 'reservation_code' => substr(md5($code_seed), 0, 6)
             ]);
+            $error_message = null;
         }
-        return redirect('/dashboard');
+        if ($error_message != null) {
+            return redirect('/dashboard')->with('error_message', $error_message);
+        } else {
+            return redirect('/dashboard');
+        }
     }
 
     /**
