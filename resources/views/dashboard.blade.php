@@ -39,7 +39,7 @@
                                             <td>Day {{ $reservation->reservation_date }}</td>
                                             <td>{{ $reservation->reservation_code }}</td>
                                             <td><button type="submit" value={{ $reservation->id }}
-                                                    name="reservation_id">Cancel</button></td>
+                                                    name="reservation_id" class="text-red-500">Cancel</button></td>
                                         </tr>
                                     @endforeach
                                 </table>

@@ -34,12 +34,6 @@ class ReservationsController extends Controller
      */
     public function store(Request $request)
     {
-        // $reservation = new Reservation;
-        // $reservation->user_id = $request->user()->id;
-        // $reservation->reservation_date = $request->input('date');
-        // $id_combination = $reservation->user_id . $reservation->reservation_date;
-        // $reservation->reservation_code = substr(md5($id_combination), 0, 6);
-        // $reservation->save();
         $id_combination = $request->user()->id . $request->input('date');
         Reservation::create([
             'user_id' => $request->user()->id,
@@ -87,11 +81,14 @@ class ReservationsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Reservation  $reservation
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Reservation $reservation)
+    public function destroy(Request $request)
     {
-        //
+        $reservation = Reservation::find($request->input('reservation_id'))->first();
+        $reservation->delete();
+
+        return redirect('/dashboard');
     }
 }
