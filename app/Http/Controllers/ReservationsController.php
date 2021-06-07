@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class ReservationsController extends Controller
 {
@@ -23,7 +24,7 @@ class ReservationsController extends Controller
      */
     public function create()
     {
-        return view('reservations.create');
+        return view('reservations.create')->with('');
     }
 
     /**
@@ -34,13 +35,28 @@ class ReservationsController extends Controller
      */
     public function store(Request $request)
     {
-        $id_combination = $request->user()->id . $request->input('date');
-        Reservation::create([
-            'user_id' => $request->user()->id,
-            'reservation_date' => $request->input('date'),
-            'reservation_code' => substr(md5($id_combination), 0, 6)
-        ]);
+        $error_message = null;
+        $reservation_exists = Reservation::where([
+            ['user_id', '=', $request->user()->id],
+            ['reservation_date', '=', $request->input('date')]
+        ])->exists();
 
+        $reservation_per_user_count = Reservation::where('user_id', $request->user()->id)->count();
+        $reservation_per_day_count = Reservation::where('reservation_date', $request->input('date'))->count();
+        if ($reservation_exists) {
+            //
+        } elseif ($reservation_per_user_count >= 3) {
+            //
+        } elseif ($reservation_per_day_count >= 10) {
+            //
+        } else {
+            $code_seed = $request->user()->id . $request->input('date') . date('Y-m-d H:i:s');
+            Reservation::create([
+                'user_id' => $request->user()->id,
+                'reservation_date' => $request->input('date'),
+                'reservation_code' => substr(md5($code_seed), 0, 6)
+            ]);
+        }
         return redirect('/dashboard');
     }
 
