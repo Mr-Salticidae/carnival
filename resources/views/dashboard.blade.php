@@ -51,14 +51,21 @@
                                     <tr>
                                         <th>Reservation Date</th>
                                         <th>Reservation Code</th>
+                                        <th>Status</th>
                                         <th></th>
                                     </tr>
                                     @foreach ($reservations as $reservation)
                                         <tr>
                                             <td>Day {{ $reservation->reservation_date }}</td>
                                             <td>{{ $reservation->reservation_code }}</td>
-                                            <td><button type="submit" value={{ $reservation->id }}
-                                                    name="reservation_id" class="text-red-500">Cancel</button></td>
+                                            @if ($reservation->status == 'Valid')
+                                                <td class="text-green-500">{{ $reservation->status }}</td>
+                                                <td><button type="submit" value={{ $reservation->id }}
+                                                        name="reservation_id" class="text-red-500">Cancel</button></td>
+                                            @else
+                                                <td>{{ $reservation->status }}</td>
+                                            @endif
+
                                         </tr>
                                     @endforeach
                                 </table>

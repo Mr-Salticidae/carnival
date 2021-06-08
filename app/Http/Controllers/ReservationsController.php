@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Exists;
 
 class ReservationsController extends Controller
 {
@@ -81,7 +84,7 @@ class ReservationsController extends Controller
      * @param  \App\Models\Reservation  $reservation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Reservation $reservation)
+    public function edit(Request $request)
     {
         //
     }
@@ -110,5 +113,41 @@ class ReservationsController extends Controller
         $reservation->delete();
 
         return redirect('/dashboard');
+    }
+
+    public function checkin()
+    {
+        return view('reservations.verify');
+    }
+
+    public function verify(Request $request)
+    {
+        $reservation_code = $request->input('reservation_code');
+        $password = $request->input('password');
+        $reservation_exists = Reservation::where('reservation_code', $reservation_code)->exists();
+        if (!$reservation_exists) {
+            $error_message = 'Reservation does not exist.';
+        } else {
+            $target_user_id = Reservation::where('reservation_code', $reservation_code)->pluck('user_id')->toArray()[0];
+            $target_password = User::where('id', $target_user_id)->pluck('password')->toArray()[0];
+            $password_verified = Hash::check($password, $target_password);
+            if (!$password_verified) {
+                $error_message = 'Password is not correct.';
+            } else {
+                $status = Reservation::where('reservation_code', $reservation_code)->pluck('status')->toArray()[0];
+                if ($status != 'Valid') {
+                    $error_message = 'Reservation is not valid';
+                } else {
+                    Reservation::where('reservation_code', $reservation_code)->update(['status' => 'Verified']);
+                    $error_message = null;
+                }
+            }
+        }
+
+        if ($error_message != null) {
+            return redirect('/checkin')->with('error_message', $error_message);
+        } else {
+            return redirect('/checkin');
+        }
     }
 }

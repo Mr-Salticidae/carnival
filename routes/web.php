@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReservationsController;
+use App\Models\Reservation;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +28,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::resource('reservations', ReservationsController::class);
+
+Route::get('/checkin', [ReservationsController::class, 'checkin']);
+
+Route::post('/reservations/verify', [ReservationsController::class, 'verify']);
 
 require __DIR__ . '/auth.php';
