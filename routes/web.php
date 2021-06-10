@@ -22,6 +22,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    $reservations = DB::update('update reservations set status = "Passed" where user_id = ? and status = "Valid" and reservation_date < ?', [Auth::id(), env("CURRENT_DAY")]);
     $reservations = DB::select('select * from reservations where user_id = ? order by reservation_date', [Auth::id()]);
     $reservations = array($reservations)[0];
     return view('dashboard', ['reservations' => $reservations]);

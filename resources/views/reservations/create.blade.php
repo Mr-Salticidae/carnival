@@ -14,16 +14,11 @@
                         <form action="/reservations" , method="POST">
                             @csrf
                             <ul>
-                                <li>Day 1 <button type="submit" name="date" value="1"
-                                        class="text-green-500">Reserve</button></li>
-                                <li>Day 2 <button type="submit" name="date" value="2"
-                                        class="text-green-500">Reserve</button></li>
-                                <li>Day 3 <button type="submit" name="date" value="3"
-                                        class="text-green-500">Reserve</button></li>
-                                <li>Day 4 <button type="submit" name="date" value="4"
-                                        class="text-green-500">Reserve</button></li>
-                                <li>Day 5 <button type="submit" name="date" value="5"
-                                        class="text-green-500">Reserve</button></li>
+
+                                @for ($i = env('CURRENT_DAY') + 1; $i <= env('CARNIVAL_DAYS'); $i++)
+                                    <li>Day {{ $i }} <button type="submit" name="date"
+                                            value={{ $i }} class="text-green-500">Reserve</button></li>
+                                @endfor
                             </ul>
                         </form>
                     </div>
