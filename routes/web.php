@@ -33,4 +33,8 @@ Route::get('/checkin', [ReservationsController::class, 'checkin'])->name('checki
 
 Route::post('/reservations/verify', [ReservationsController::class, 'verify']);
 
+Route::get('/success', function () {
+    return view('successToCheckin');
+});
+
 require __DIR__ . '/auth.php';

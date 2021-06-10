@@ -139,6 +139,7 @@ class ReservationsController extends Controller
                     $error_message = 'Reservation is ' . $status;
                 } else {
                     Reservation::where('reservation_code', $reservation_code)->update(['status' => 'Verified']);
+                    $username = User::where('id', $target_user_id)->pluck('username')->toArray()[0];
                     $error_message = null;
                 }
             }
@@ -147,7 +148,7 @@ class ReservationsController extends Controller
         if ($error_message != null) {
             return redirect('/checkin')->with('error_message', $error_message);
         } else {
-            return redirect('/checkin');
+            return redirect('/success')->with('username', $username);
         }
     }
 }
