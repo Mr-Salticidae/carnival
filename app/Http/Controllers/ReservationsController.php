@@ -5,28 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Exists;
 
 class ReservationsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-    }
-
-    /**
      * Show the form for creating a new resource.
-     *
+     * 
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        if ($request->user() == null) {
+            return redirect('login');
+        }
         return view('reservations.create');
     }
 
@@ -65,40 +58,6 @@ class ReservationsController extends Controller
         } else {
             return redirect('/dashboard');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Reservation  $reservation
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Reservation  $reservation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Reservation  $reservation
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Reservation $reservation)
-    {
-        //
     }
 
     /**
@@ -150,5 +109,10 @@ class ReservationsController extends Controller
         } else {
             return redirect('/success')->with('username', $username);
         }
+    }
+
+    public function success()
+    {
+        return view('successToCheckin');
     }
 }

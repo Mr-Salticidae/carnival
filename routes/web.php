@@ -28,14 +28,14 @@ Route::get('/dashboard', function () {
     return view('dashboard', ['reservations' => $reservations]);
 })->middleware(['auth'])->name('dashboard');
 
-Route::resource('reservations', ReservationsController::class);
+Route::get('/create', [ReservationsController::class, 'create']);
 
 Route::get('/checkin', [ReservationsController::class, 'checkin'])->name('checkin');
 
-Route::post('/reservations/verify', [ReservationsController::class, 'verify']);
+Route::post('/store', [ReservationsController::class, 'store']);
 
-Route::get('/success', function () {
-    return view('successToCheckin');
-});
+Route::post('/verify', [ReservationsController::class, 'verify']);
+
+Route::get('/success', [ReservationsController::class, 'success']);
 
 require __DIR__ . '/auth.php';

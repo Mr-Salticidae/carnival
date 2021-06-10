@@ -11,7 +11,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div>
                         <b>Create a new reservation</b>
-                        <form action="/reservations" , method="POST">
+                        <form action="/store" , method="POST">
                             @csrf
                             <ul>
 

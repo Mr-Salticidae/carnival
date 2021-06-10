@@ -8,10 +8,16 @@
 </head>
 
 <body>
-    <h1>Welcome, {{ session('username') }}.</h1>
-    @php
-        header('Refresh:5; url=/checkin');
-    @endphp
+    @if (session('username'))
+        <h1>Welcome, {{ session('username') }}.</h1>
+        @php
+            header('Refresh:5; url=/checkin');
+        @endphp
+    @else
+        @php
+            header('Refresh:0; url=/');
+        @endphp
+    @endif
 </body>
 
 </html>

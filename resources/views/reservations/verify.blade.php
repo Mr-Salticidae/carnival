@@ -15,7 +15,7 @@
         @if (session('error_message'))
             <x-alert :error_message="session('error_message')" />
         @endif
-        <form method="POST" action="/reservations/verify">
+        <form method="POST" action="/verify">
             @csrf
             <!-- Reservation Code -->
             <div>
