@@ -29,7 +29,7 @@ Route::get('/dashboard', function () {
 
 Route::resource('reservations', ReservationsController::class);
 
-Route::get('/checkin', [ReservationsController::class, 'checkin']);
+Route::get('/checkin', [ReservationsController::class, 'checkin'])->name('checkin');
 
 Route::post('/reservations/verify', [ReservationsController::class, 'verify']);
 

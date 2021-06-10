@@ -136,7 +136,7 @@ class ReservationsController extends Controller
             } else {
                 $status = Reservation::where('reservation_code', $reservation_code)->pluck('status')->toArray()[0];
                 if ($status != 'Valid') {
-                    $error_message = 'Reservation is not valid';
+                    $error_message = 'Reservation is ' . $status;
                 } else {
                     Reservation::where('reservation_code', $reservation_code)->update(['status' => 'Verified']);
                     $error_message = null;

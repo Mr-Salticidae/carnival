@@ -12,6 +12,9 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
+        @if (session('error_message'))
+            <x-alert :error_message="session('error_message')" />
+        @endif
         <form method="POST" action="/reservations/verify">
             @csrf
             <!-- Reservation Code -->
