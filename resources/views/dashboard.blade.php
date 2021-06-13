@@ -40,7 +40,7 @@
                         @if (empty($reservations))
                             No Reservation Yet
                         @else
-                            <form action="/reservations/delete" method="post">
+                            <form action="/delete" method="post">
                                 @csrf
                                 @method('delete')
                                 <table>

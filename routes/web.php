@@ -30,6 +30,8 @@ Route::get('/dashboard', function () {
 
 Route::get('/create', [ReservationsController::class, 'create']);
 
+Route::delete('/delete', [ReservationsController::class, 'destroy']);
+
 Route::get('/checkin', [ReservationsController::class, 'checkin'])->name('checkin');
 
 Route::post('/store', [ReservationsController::class, 'store']);
