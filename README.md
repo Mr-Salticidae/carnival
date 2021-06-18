@@ -3,7 +3,7 @@
 * Yifei GAO - 299905@university-365.com : Analyze project requirements and write project requirements instruction manual.
 * Huiyang HU - 299889@university-365.com : Verify the result, make the project implementation plan, and supervise the construction progress.
 * Xin WANG - 	299902@university-365.com : Test code, sort questions, and write a problem feedback manual.
-* Chu WANG - 299953@university-365.com : design database structure, design web layout, define models and controllers, and write code.
+* Chu WANG - 299953@university-365.com : design database structure, design web layout, define models and controllers, write code, and fix bugs.
 
 # Part 2 - How to install this system on a new machine
 
