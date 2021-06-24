@@ -43,7 +43,7 @@
                             <form action="/delete" method="post">
                                 @csrf
                                 @method('delete')
-                                <table>
+                                <table border="0" cellspacing="15" cellpadding="20">
                                     <tr>
                                         <th>Reservation Date</th>
                                         <th>Reservation Code</th>

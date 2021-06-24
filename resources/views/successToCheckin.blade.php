@@ -7,9 +7,9 @@
     <title>Check in successfully</title>
 </head>
 
-<body>
+<body style="background-color:#F5DEB3">
     @if (session('username'))
-        <h1>Welcome, {{ session('username') }}.</h1>
+        <h1><center>Welcome, {{ session('username') }}.</center></h1>
         @php
             header('Refresh:5; url=/checkin');
         @endphp
